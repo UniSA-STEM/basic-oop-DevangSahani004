@@ -53,6 +53,19 @@ class Hacker:
                 return
         print("Acquisition failed: No CryptoToken in inventory.")
 
+    def upgrade_rig(self):
+        if self.__rig is None:
+            print("Upgrade failed: No rig found allocated to hacker!")
+            return
+
+        for patch in self.__inventory:
+            if patch.get_name() == "Hardware Patch":
+                self.__rig.upgrade_rig()
+                self.__inventory.remove(patch)
+                print(f"Rig {self.__rig.get_name()} upgraded to level {self.__rig.get_upgrade_level()}.")
+                return
+        print("Upgrade failed: No Hardware Patch found in inventory.")
+
     def launch_data_spike(self, target_rig):
         if self.__rig is None:
             print("Launch failed: No rig equipped.")
