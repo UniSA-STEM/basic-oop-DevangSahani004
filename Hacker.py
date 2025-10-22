@@ -54,7 +54,18 @@ class Hacker:
         print("Acquisition failed: No CryptoToken in inventory.")
 
     def launch_data_spike(self, target_rig):
-        pass
+        if self.__rig is None:
+            print("Launch failed: No rig equipped.")
+            return
+
+        for asset in self.__rig.get_storage():
+            if asset.get_name() == "Data Spike":
+                self.__rig.get_storage().remove(asset)
+                target_rig.take_hits()
+                self.increase_trace_level()
+                print(f"{self.__name} launched a Data Spike at {target_rig.get_name()}.")
+                return
+        print("Launch failed: No Data Spike in rig storage.")
 
     def __str__(self):
         if self.__rig:
