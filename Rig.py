@@ -6,6 +6,7 @@ ID: 110411585
 Username: sahdy004
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
+import random
 from Asset import Asset
 
 
@@ -34,10 +35,28 @@ class Rig:
         return self.__broken
 
     def repair_rig(self):
-        pass
+        if self.__damage == 0:
+            print(f"The rig, {self.__name}, has no damage. No repair is required!")
+            return
+
+        for asset in self.__storage:
+            if asset.get_name() == "CryptoToken":
+                self.__storage.remove(asset)
+                self.__damage = 0
+                self.__broken = False
+                print(f"The rig, {self.__name}, has been repaired using a CryptoToken.")
+                return
+
+        print(f"Rig repair failed! No CryptoToken was found in {self.__name}'s storage.")
 
     def upgrade_rig(self):
-        pass
+        for asset in self.__storage:
+            if asset.get_name() == "Hardware Patch":
+                self.__storage.remove(asset)
+                self.__upgrade_level += 1
+                print(f"{self.__name} upgraded to {self.__upgrade_level} level. Amazing!")
+                return
+        print(f"Upgrade failed. No Hardware Patch was found in {self.__name}'s storage.")
 
     def take_hits(self):
         pass
