@@ -98,6 +98,18 @@ class Hacker:
                 return
         print("Decryption failed: No Security Chip available.")
 
+    def transfer_asset(self, asset):
+        if asset.is_encrypted():
+            print("Transfer failed: Asset is encrypted and cannot be transferred.")
+            return
+        if self.__rig:
+            self.__rig.store_asset(asset)
+            self.remove_from_inventory(asset)
+            self.increase_trace_level()
+            print(f"{asset.get_name()} transferred to rig {self.__rig.get_name()}.")
+        else:
+            print("Transfer failed: No rig equipped allocated to hacker.")
+
     def __str__(self):
         if self.__rig:
             rig_name =  self.__rig.get_name()
