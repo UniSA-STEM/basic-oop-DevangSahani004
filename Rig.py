@@ -69,13 +69,35 @@ class Rig:
             print(f"The rig, {self.__name}, took a hit. It currently has {self.__damage} damages.")
 
     def generate_asset(self):
-        pass
+        asset_options = [
+            Asset("CryptoToken", "Required to acquire or repair damaged rigs."),
+            Asset("Data Spike", "Used for battles."),
+            Asset("Removable Drive", "Used for extraction."),
+            Asset("Security Chip", "Used to encrypt or decrypt assets in the rig."),
+            Asset("Hardware Patch", "Used for upgrade rigs."),
+        ]
 
-    def store_asset(self):
-        pass
+        random_asset = random.choice(asset_options)
+        self.__storage.append(random_asset)
+        print(f"Rig {self.__name} randomly generated a asset, {random_asset.get_name()}.")
 
-    def release_asset(self):
-        pass
+    def store_asset(self, asset):
+        if asset.is_encrypted():
+            print("Failed to store asset. Asset is encrypted.")
+            return
+        self.__storage.append(asset)
+        print(f"The asset {asset.get_name()} has been stored.")
+
+    def release_asset(self, asset):
+        if asset.is_encrypted():
+            print(f"Failed to release asset {asset.get_name()}. Asset is encrypted.")
+            return None
+        if asset in self.__storage:
+            self.__storage.remove(asset)
+            print(f"The asset {asset.get_name()} has been released from {self.__name}.")
+            return asset
+        print(f"Asset {asset.get_name()} was not found in {self.__name}'s storage.")
+        return None
 
     def __str__(self):
         if self.__broken:
