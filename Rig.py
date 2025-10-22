@@ -59,7 +59,14 @@ class Rig:
         print(f"Upgrade failed. No Hardware Patch was found in {self.__name}'s storage.")
 
     def take_hits(self):
-        pass
+        self.__damage += 1
+        hits_threshold = max(1, 2 - self.__upgrade_level)
+
+        if self.__damage >= hits_threshold:
+            self.__broken = True
+            print(f"The rig, {self.__name}, has broke. Repairs are required!.")
+        else:
+            print(f"The rig, {self.__name}, took a hit. It currently has {self.__damage} damages.")
 
     def generate_asset(self):
         pass
