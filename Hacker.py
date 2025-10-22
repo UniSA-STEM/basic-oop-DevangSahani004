@@ -110,6 +110,15 @@ class Hacker:
         else:
             print("Transfer failed: No rig equipped allocated to hacker.")
 
+    def scan_inventory(self, asset_name):
+        for asset in self.__inventory:
+            if asset.get_name() == asset_name:
+                self.__inventory.remove(asset)
+                print(f"Asset {asset_name} was found and has been removed from the inventory!")
+                return asset
+        print(f"Asset {asset_name} does not exist in the inventory.")
+        return None
+
     def __str__(self):
         if self.__rig:
             rig_name =  self.__rig.get_name()
