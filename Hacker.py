@@ -45,7 +45,13 @@ class Hacker:
         self.__inventory.remove(asset)
 
     def acquire_rig(self, rig):
-        pass
+        for asset in self.__inventory:
+            if asset.get_name() == "CryptoToken":
+                self.__inventory.remove(asset)
+                self.__rig = rig
+                print(f"Hacker {self.__name} has acquired rig {rig.get_name()} and is now activated!")
+                return
+        print("Acquisition failed: No CryptoToken in inventory.")
 
     def launch_data_spike(self, target_rig):
         pass
