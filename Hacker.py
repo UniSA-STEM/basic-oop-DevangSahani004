@@ -67,6 +67,24 @@ class Hacker:
                 return
         print("Launch failed: No Data Spike in rig storage.")
 
+    def encrypt_asset(self, asset):
+        for chip in self.__inventory:
+            if chip.get_name() == "Security Chip":
+                asset.encrypt_asset()
+                self.__inventory.remove(chip)
+                print(f"{asset.get_name()} has been encrypted.")
+                return
+        print("Encryption failed: No Security Chip available.")
+
+    def decrypt_asset(self, asset):
+        for chip in self.__inventory:
+            if chip.get_name() == "Security Chip":
+                asset.decrypt_asset()
+                self.__inventory.remove(chip)
+                print(f"{asset.get_name()} has been decrypted.")
+                return
+        print("Decryption failed: No Security Chip available.")
+
     def __str__(self):
         if self.__rig:
             rig_name =  self.__rig.get_name()
