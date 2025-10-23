@@ -45,3 +45,7 @@ if locate_asset is not None:
     hacker.decrypt_asset(locate_asset)
 else:
     print("Removable Drive is not in rig storage. Try again!")
+
+rig.take_hits()
+rig.take_hits()
+print(rig)
