@@ -49,3 +49,7 @@ else:
 rig.take_hits()
 rig.take_hits()
 print(rig)
+
+hacker.get_inventory().append(Asset("CryptoToken", "Used for repair"))
+rig.repair_rig(hacker)
+print(rig)
