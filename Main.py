@@ -33,3 +33,15 @@ if locate_asset is not None:
     hacker.encrypt_asset(locate_asset)
 else:
     print("Removable Drive is not in rig storage. Try again!")
+
+locate_asset = None
+hacker.get_inventory().append(Asset("Security Chip", "Used for encryption"))
+
+for asset in rig.get_storage():
+    if asset.get_name() == "Removable Drive":
+        locate_asset = asset
+
+if locate_asset is not None:
+    hacker.decrypt_asset(locate_asset)
+else:
+    print("Removable Drive is not in rig storage. Try again!")
