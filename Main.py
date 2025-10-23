@@ -11,6 +11,7 @@ from Hacker import Hacker
 from Rig import Rig
 from Asset import Asset
 
+
 hacker = Hacker("NoTrailz")
 print(hacker)
 
