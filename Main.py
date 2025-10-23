@@ -22,8 +22,13 @@ rig.generate_asset()
 rig.generate_asset()
 print(rig)
 
+locate_asset = None
 hacker.get_inventory().append(Asset("Security Chip", "Used for encryption"))
-hacker.encrypt_asset("SilentKilla", "Removable Drive")
+for asset in rig.get_storage():
+    if asset.get_name() == "Removable Drive":
+        locate_asset = asset
 
-hacker.get_inventory().append(Asset("Security Chip", "Used for decryption"))
-hacker.decrypt_asset("SilentKilla", "Removable Drive")
+    if locate_asset is not None:
+        hacker.encrypt_asset(locate_asset)
+    else:
+        print(f"{locate_asset} is not in rig storage. Try again!")
