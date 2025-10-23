@@ -1,8 +1,29 @@
 """
 File: main.py
-Description: <A brief description of this Python module.>
-Author: <full name>
-ID: <student_id>
-Username: <username>
+Description: Represents a key to running the program using Hacker, Asset & Rig.py as a library. Contains all test cases.
+Author: Devang Sahani
+ID: 110411585
+Username: sahdy004
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
+
+from Hacker import Hacker
+from Rig import Rig
+from Asset import Asset
+
+hacker = Hacker("NoTrailz")
+print(hacker)
+
+rig = Rig("SilentKilla")
+hacker.acquire_rig(rig)
+print(hacker)
+
+rig.generate_asset()
+rig.generate_asset()
+print(rig)
+
+hacker.get_inventory().append(Asset("Security Chip", "Used for encryption"))
+hacker.encrypt_asset("SilentKilla", "Removable Drive")
+
+hacker.get_inventory().append(Asset("Security Chip", "Used for decryption"))
+hacker.decrypt_asset("SilentKilla", "Removable Drive")
