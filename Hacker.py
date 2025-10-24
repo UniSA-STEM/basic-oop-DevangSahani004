@@ -11,12 +11,20 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 from Asset import Asset
 
 class Hacker:
+    """Represents cyberpunk simulation of a hacker. A Hacker has a name, an inventory of digital
+    assets, a rig, and a trace level that increases with risky actions. Hackers can acquire a
+    rig, launch attacks on demand, encrypt or decrypt assets, and manage their inventory as needed.
+    """
+
     def __init__(self, name):
+        # initialised constructor with attributes containing data
+        # consists of hacker's name, inventory, rig and trace level all under private visibility
         self.__name = name
         self.__inventory = [Asset("CryptoToken", "Required to acquire or repair damaged rigs.")]
         self.__rig = None
         self.__trace_level = 0
 
+    # on the basis of using private attributes, the getter methods are set below.
     def get_name(self):
         return self.__name
 
@@ -29,6 +37,7 @@ class Hacker:
     def get_trace_level(self):
         return self.__trace_level
 
+    # as well as setter methods
     def set_rig(self, rig):
         self.__rig = rig
 
@@ -44,6 +53,8 @@ class Hacker:
     def remove_from_inventory(self, asset):
         self.__inventory.remove(asset)
 
+    # developed a function for hacker to acquire rig upon having a cryptotoken stored in inventory.
+    # if none found, hacker simply cannot acquire a rig and do it's magic
     def acquire_rig(self, rig):
         for asset in self.__inventory:
             if asset.get_name() == "CryptoToken":
@@ -53,6 +64,8 @@ class Hacker:
                 return
         print("Acquisition failed: No CryptoToken in inventory.")
 
+    # in order to upgrade a rig to determine how the rig takes hits, it also requires hacker to have
+    # a hardware patch stored in inventory.
     def upgrade_rig(self):
         if self.__rig is None:
             print("Upgrade failed: No rig found allocated to hacker!")
@@ -66,6 +79,8 @@ class Hacker:
                 return
         print("Upgrade failed: No Hardware Patch found in inventory.")
 
+    # upon determining the hacker has a rig, it requires the rig to have a data spike within its storage.
+    # this is required in order for the rig to perform spikes on a target rig.
     def launch_data_spike(self, target_rig):
         if self.__rig is None:
             print("Launch failed: No rig equipped.")
@@ -80,6 +95,8 @@ class Hacker:
                 return
         print("Launch failed: No Data Spike in rig storage.")
 
+    # in order to encrypt assets, hacker must also have a security chip in their inventory
+    # else, encryption will fail and output as necessary.
     def encrypt_asset(self, asset):
         for chip in self.__inventory:
             if chip.get_name() == "Security Chip":
@@ -89,6 +106,7 @@ class Hacker:
                 return
         print("Encryption failed: No Security Chip available.")
 
+    # same requirements are applied here too.
     def decrypt_asset(self, asset):
         for chip in self.__inventory:
             if chip.get_name() == "Security Chip":
@@ -98,6 +116,9 @@ class Hacker:
                 return
         print("Decryption failed: No Security Chip available.")
 
+    # hacker has the capability of transferring his inventory assets to the rig's storage
+    # the asset must be decrypted in order to be transferred.
+    # transfer of assets will increase the trace level.
     def transfer_asset(self, asset):
         if asset.is_encrypted():
             print("Transfer failed: Asset is encrypted and cannot be transferred.")
@@ -110,6 +131,7 @@ class Hacker:
         else:
             print("Transfer failed: No rig equipped allocated to hacker.")
 
+    # provides capability for hacker to search through their assets name and remove it.
     def scan_inventory(self, asset_name):
         for asset in self.__inventory:
             if asset.get_name() == asset_name:
@@ -119,9 +141,12 @@ class Hacker:
         print(f"Asset {asset_name} does not exist in the inventory.")
         return None
 
+    # as per the specifications, string conversion method provides the hacker's name, rig detail, trace level
+    # and inventory. However, there's additional logic to validate the existence of a hacker's rig and whether
+    # they have anything in the inventory or not. Based on results, it will finish printing the information.
     def __str__(self):
         if self.__rig:
-            rig_name =  self.__rig.get_name()
+            rig_name = self.__rig.get_name()
         else:
             rig_name = "Rig not found!"
 
