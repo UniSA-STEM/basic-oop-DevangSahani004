@@ -11,14 +11,22 @@ from Asset import Asset
 
 
 class Rig:
+    """
+    Rig represents the computer that is utilised by hackers to perform their magic in the simulation.
+    A rig can only be acquired by hacker when a CryptoToken is available to them.
+    Every rig is determined with a name, damage level, current state, upgrade level and assets.
+    Has capability to generate assets upon initialisation.
+    """
     def __init__(self, name):
+
+        # upon instantiation, the rig is given pre-defined data through private visibility
         self.__name = name
         self.__damage = 0
         self.__broken = False
         self.__storage = [Asset("Data Spike", "Used for battles"), Asset("Data Spike", "Used for battles"), Asset("Removable Drive", "Used for extraction")]
         self.__upgrade_level = 0
 
-
+    # which are further retrieved from these getter methods.
     def get_name(self):
         return self.__name
 
@@ -34,6 +42,9 @@ class Rig:
     def is_broken(self):
         return self.__broken
 
+    # repair rig provides capability to ensure if the rig has damage or not
+    # upon validating its damage, it can repair itself through the use of a CryptoToken.
+    # in return, it will reset rig damage and update its condition status.
     def repair_rig(self):
         if self.__damage == 0:
             print(f"The rig, {self.__name}, has no damage. No repair is required!")
@@ -49,6 +60,8 @@ class Rig:
 
         print(f"Rig repair failed! No CryptoToken was found in {self.__name}'s storage.")
 
+    # capability to upgrade the rig's stability when taking hits.
+    # An upgrade is performed upon validating that the inventory has a hardware patch.
     def upgrade_rig(self):
         for asset in self.__storage:
             if asset.get_name() == "Hardware Patch":
@@ -58,6 +71,8 @@ class Rig:
                 return
         print(f"Upgrade failed. No Hardware Patch was found in {self.__name}'s storage.")
 
+    # when in simulation, the rig takes hit through this function.
+    # if damage level of this rig goes beyond its threshold, it will return a broken state for its condition.
     def take_hits(self):
         self.__damage += 1
         hits_threshold = max(1, 2 - self.__upgrade_level)
@@ -68,6 +83,8 @@ class Rig:
         else:
             print(f"The rig, {self.__name}, took a hit. It currently has {self.__damage} damages.")
 
+    # using random, this function has a set of 5 options.
+    # When instantiated, the rig will generate and keep it within its storage.
     def generate_asset(self):
         asset_options = [
             Asset("CryptoToken", "Required to acquire or repair damaged rigs."),
@@ -81,6 +98,8 @@ class Rig:
         self.__storage.append(random_asset)
         print(f"Rig {self.__name} randomly generated a asset, {random_asset.get_name()}.")
 
+    # this function allows the rig to store passed in asset to its storage.
+    # it will not store if its encrypted.
     def store_asset(self, asset):
         if asset.is_encrypted():
             print("Failed to store asset. Asset is encrypted.")
@@ -88,6 +107,8 @@ class Rig:
         self.__storage.append(asset)
         print(f"The asset {asset.get_name()} has been stored.")
 
+    # rig has the capability to release an asset stored within its storage if not encrypted.
+    # however, if the asset is encrypted, this function will not work.
     def release_asset(self, asset):
         if asset.is_encrypted():
             print(f"Failed to release asset {asset.get_name()}. Asset is encrypted.")
@@ -99,6 +120,9 @@ class Rig:
         print(f"Asset {asset.get_name()} was not found in {self.__name}'s storage.")
         return None
 
+
+    # a string conversion method that will return a formatted string that is visually appealing.
+    # provides informative data neatly such as rig's name, condition and stored assets.
     def __str__(self):
         if self.__broken:
             condition = "Broken"
